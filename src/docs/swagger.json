@@ -1,0 +1,8 @@
+{
+  "openapi": "3.0.3",
+  "info": { "title": "Quiz App API Doc", "version": "1.0.0" },
+  "servers": [{ "url": "http://localhost:3000" }],
+  "tags": [],
+  "paths": {},
+  "components": {}
+}

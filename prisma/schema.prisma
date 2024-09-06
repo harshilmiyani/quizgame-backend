@@ -1,0 +1,78 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+type AnswerType {
+  ciphertext String
+  iv         String
+}
+
+type Question {
+  id       String
+  question String
+  optiona  String
+  optionb  String
+  optionc  String
+  optiond  String
+  answer   AnswerType
+}
+
+type CoinRecord {
+  coins  String
+  title  String
+  status String
+  date   String
+}
+
+model User {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  email       String
+  profile     String?
+  name        String
+  fcm_id      String?
+  firebase_id String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  Coin        Coin?
+}
+
+model Coin {
+  id          String       @id @default(auto()) @map("_id") @db.ObjectId
+  coins       Int
+  userId      String       @unique @db.ObjectId
+  coinHistory CoinRecord[]
+  User        User         @relation(fields: [userId], references: [id])
+}
+
+model Category {
+  id           String    @id @default(auto()) @map("_id") @db.ObjectId
+  categoryName String    @unique
+  Contests     Contest[]
+}
+
+model Contest {
+  id                 String     @id @default(auto()) @map("_id") @db.ObjectId
+  contestsName       String
+  description        String
+  image              String
+  category           Category   @relation(fields: [categoryName], references: [categoryName])
+  categoryName       String
+  isLive             Boolean
+  entryCoins         Int
+  participants       Int
+  winnerAnnouncement String
+  winnerCoinsPrize   Int
+  end_date           String
+  quizQuestions      Question[]
+}
