@@ -1,11 +1,6 @@
-import {
-  formatHTTPLoggerResponse,
-  httpLogger,
-  parseStatusError,
-} from "../utils";
+import { parseStatusError } from "../utils";
 import jwt from "jsonwebtoken";
 import { env } from "process";
-import { LOG_ERROR } from "../constants";
 
 class AuthService {
   static generateNewJWT = async (payload: object, expiresIn: string) => {

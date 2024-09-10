@@ -1,26 +1,25 @@
 import { prisma } from "../../prisma/client";
 import { ICreateUserServicePayload } from "../types";
-import {
-  formatHTTPLoggerResponse,
-  httpLogger,
-  parseStatusError,
-} from "../utils";
-import { LOG_ERROR } from "../constants";
+import { parseStatusError } from "../utils";
 
 class UserService {
   static findUserByEmail = async (email: string) => {
     try {
       const user = await prisma.user.findFirst({ where: { email } });
-      const userId = user.id;
-      const coins = await prisma.coin.findFirst({
-        where: { userId },
-      });
+      if (user) {
+        const userId = user.id;
+        const coins = await prisma.coin.findFirst({
+          where: { userId },
+        });
 
-      const finalUserData = {
-        ...user,
-        coins: coins.coins,
-      };
-      return finalUserData;
+        const finalUserData = {
+          ...user,
+          coins: Number(coins.coins),
+        };
+        return finalUserData;
+      } else {
+        return null;
+      }
     } catch (error: any) {
       throw parseStatusError(error.message, error.statusCode);
     }
@@ -48,14 +47,14 @@ class UserService {
       });
       const coins = await prisma.coin.create({
         data: {
-          coins: 200,
+          coins: Number(reqBody.coins),
           userId: user.id,
         },
       });
 
       const finalUserData = {
         ...user,
-        coins: coins.coins,
+        coins: Number(coins.coins),
       };
       return finalUserData;
     } catch (error: any) {

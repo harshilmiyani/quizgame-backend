@@ -14,7 +14,7 @@ const postSocialAuth = async (
 ) => {
   try {
     validatorErrorsHandler(req);
-    const { email, name, fcm_id, firebase_id, profile } =
+    const { email, name, fcm_id, firebase_id, profile, coins } =
       req.body as IPostSocialAuthPayload;
     let foundedUser = null;
     if (email) {
@@ -38,13 +38,13 @@ const postSocialAuth = async (
       res.status(200).json(responsePayload);
     } else {
       const user = await UserService.createUser({
+        coins: Number(coins),
         email,
         name: email,
         fcm_id: fcm_id ?? "",
         firebase_id: firebase_id ?? "",
         profile: profile ?? "",
       });
-
       const { authToken, refreshToken } = await AuthService.generateAuthTokens(
         user.email,
         user.id

@@ -15,4 +15,10 @@ export const AppStrings = {
   appleUserIdRequired:
     "Apple user id is required when using social login with apple",
   appleAuthCodeRequired: "Apple auth code is required",
+
+  // Set Coins
+  invalidCoins: "Invalid Coins",
+  invalidTitle: "Invalid Title",
+  invalidStatus: "Invalid Status",
+  invalidDate: "Invalid Date",
 };

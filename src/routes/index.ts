@@ -1,4 +1,4 @@
-export { authRoutes } from "./authRoutes";
-export { contestRoutes } from "./contestRoutes";
-export { userRoutes } from "./userRoutes";
-export { coinRoutes } from "./coinRoutes";
+export { authRoute } from "./authRoute";
+export { contestRoute } from "./contestRoute";
+export { userRoute } from "./userRoute";
+export { coinRoute } from "./coinRoute";

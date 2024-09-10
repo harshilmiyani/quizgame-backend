@@ -13,23 +13,17 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-type AnswerType {
-  ciphertext String
-  iv         String
-}
-
 type Question {
-  id       String
   question String
   optiona  String
   optionb  String
   optionc  String
   optiond  String
-  answer   AnswerType
+  answer   String
 }
 
 type CoinRecord {
-  coins  String
+  coins  Int
   title  String
   status String
   date   String
@@ -56,18 +50,18 @@ model Coin {
 }
 
 model Category {
-  id           String    @id @default(auto()) @map("_id") @db.ObjectId
-  categoryName String    @unique
-  Contests     Contest[]
+  id       String    @id @default(auto()) @map("_id") @db.ObjectId
+  category String    @unique
+  Contests Contest[]
 }
 
 model Contest {
   id                 String     @id @default(auto()) @map("_id") @db.ObjectId
-  contestsName       String
+  contestName        String
   description        String
   image              String
-  category           Category   @relation(fields: [categoryName], references: [categoryName])
-  categoryName       String
+  category           Category   @relation(fields: [categoryId], references: [id])
+  categoryId         String     @unique @db.ObjectId
   isLive             Boolean
   entryCoins         Int
   participants       Int

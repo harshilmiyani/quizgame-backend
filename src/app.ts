@@ -9,7 +9,8 @@ import "../prisma/client";
 import { ErrorType } from "./types";
 import { rateLimit } from "express-rate-limit";
 // import swaggerDocument from "./docs/swagger.json";
-import { authRoutes, coinRoutes, contestRoutes, userRoutes } from "./routes";
+import { authRoute, coinRoute, contestRoute, userRoute } from "./routes";
+import { categoryRoute } from "./routes/categoryRoute";
 
 const limiter = rateLimit({
   windowMs: 10 * 60 * 1000,
@@ -39,10 +40,11 @@ app.set("trust proxy", 1);
 //   swaggerUi.setup(swaggerDocument)
 // );
 
-app.use("/api/v1/auth", authRoutes);
-app.use("/api/v1/contest", contestRoutes);
-app.use("/api/v1/coin", coinRoutes);
-app.use("/api/v1/user", userRoutes);
+app.use("/api/v1/auth", authRoute);
+app.use("/api/v1/contest", contestRoute);
+app.use("/api/v1/coin", coinRoute);
+app.use("/api/v1/user", userRoute);
+app.use("/api/v1/category", categoryRoute);
 
 app.get("/x-forwarded-for", (request, response) =>
   response.send(request.headers["x-forwarded-for"])

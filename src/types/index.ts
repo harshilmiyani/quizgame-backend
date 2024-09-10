@@ -5,5 +5,6 @@ export {
   IPostAccessTokenPayload,
   IPostGetContestById,
   IPostSetUserCoins,
+  IPostSetNewContest,
 } from "./request";
 export { ICreateUserServicePayload } from "./servicesTypes";
