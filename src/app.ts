@@ -45,6 +45,9 @@ app.use("/api/v1/contest", contestRoute);
 app.use("/api/v1/coin", coinRoute);
 app.use("/api/v1/user", userRoute);
 app.use("/api/v1/category", categoryRoute);
+app.use("/", (req, res) => {
+  res.status(100).json({ done: "done" });
+});
 
 app.get("/x-forwarded-for", (request, response) =>
   response.send(request.headers["x-forwarded-for"])
